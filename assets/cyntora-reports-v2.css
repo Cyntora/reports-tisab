@@ -583,6 +583,37 @@ section.page--dark .unavailable { background: rgba(255, 255, 255, 0.05); border-
 .next-steps--external { margin-top: 48px; padding-top: 32px; border-top: 1px solid var(--border); }
 .next-steps--external h2 { font-size: clamp(22px, 2.4vw, 32px); }
 
+/* Upsell box — used by paused clients (ESN) instead of the next-steps list.
+   A single bordered card so the recommendations read as an offer, not as
+   in-contract "Vad vi gör härnäst" actions. */
+.upsell-box {
+  margin-top: 12px; padding: 28px 32px;
+  background: var(--brass-soft);
+  border-left: 4px solid var(--brass);
+  border-radius: 12px; max-width: 82ch;
+}
+.upsell-box h2 {
+  font-family: var(--font-display);
+  color: var(--cover-title, var(--ink));
+  font-size: clamp(24px, 2.6vw, 34px);
+  font-weight: 400; letter-spacing: -0.015em; margin-bottom: 18px;
+}
+.upsell-box ul { list-style: none; padding: 0; margin: 0; max-width: 80ch; }
+.upsell-box li {
+  font-family: var(--font-body); font-size: 16px; line-height: 1.55;
+  color: var(--ink); padding: 12px 0 12px 24px; position: relative;
+  border-bottom: 1px solid var(--border);
+}
+.upsell-box li::before {
+  content: ""; position: absolute; left: 0; top: 21px;
+  width: 14px; height: 1px; background: var(--brass);
+}
+.upsell-box li:last-child { border-bottom: none; }
+section.page--dark .upsell-box { background: var(--bg-dark-soft); border-left-color: var(--brass); }
+section.page--dark .upsell-box h2,
+section.page--dark .upsell-box li { color: var(--ink-on-dark); }
+section.page--dark .upsell-box li { border-bottom-color: var(--border-dark); }
+
 /* ──────────────────────────── Dark-section text overrides ──────────────────────────── */
 /* Anything that renders body text needs to flip to ink-on-dark when the
    parent section has `.page--dark`. Default rules use --ink (dark) which
