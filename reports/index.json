@@ -3,6 +3,11 @@
   "client_display_name": "TISAB",
   "reports": [
     {
+      "file": "2026-05.html",
+      "month": "2026-05",
+      "label": "Maj 2026"
+    },
+    {
       "file": "2026-04.html",
       "month": "2026-04",
       "label": "April 2026"
