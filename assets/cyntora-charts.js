@@ -49,9 +49,11 @@
     return Math.round(v).toLocaleString('sv-SE');
   }
 
-  function fmtCurrency(v, ccy) {
+  function fmtCurrency(v, ccy, explicit) {
     var symbols = { USD: '$', EUR: '€', GBP: '£', SEK: 'kr', NOK: 'kr', DKK: 'kr', CHF: 'CHF', CAD: 'C$' };
-    var s = symbols[ccy] || ccy + ' ';
+    // explicit -> ISO code prefix ("SEK 53,17K") instead of "kr"; avoids
+    // ambiguity in reports that convert foreign currency to one display ccy.
+    var s = explicit ? (ccy + ' ') : (symbols[ccy] || ccy + ' ');
     if (Math.abs(v) >= 1e6) return s + (v / 1e6).toFixed(2) + 'M';
     if (Math.abs(v) >= 1e3) return s + (v / 1e3).toFixed(2) + 'K';
     return s + (Math.round(v * 100) / 100).toLocaleString('sv-SE');
@@ -68,7 +70,7 @@
   }
 
   function pickFormatter(spec) {
-    if (spec.format === 'currency') return function (v) { return fmtCurrency(v, spec.currency || 'SEK'); };
+    if (spec.format === 'currency') return function (v) { return fmtCurrency(v, spec.currency || 'SEK', spec.currency_explicit); };
     if (spec.format === 'duration') return fmtDuration;
     if (spec.format === 'percent')  return function (v) { return (v * 100).toFixed(1) + '%'; };
     return fmtNumber;
@@ -153,7 +155,7 @@
 
     var fmtMain = pickFormatter(spec);
     var fmtRight = dualAxis && spec.series && spec.series[1]
-      ? pickFormatter({ format: spec.series[1].format || spec.format, currency: spec.series[1].currency || spec.currency })
+      ? pickFormatter({ format: spec.series[1].format || spec.format, currency: spec.series[1].currency || spec.currency, currency_explicit: spec.currency_explicit })
       : fmtMain;
 
     var perDatasetTooltip = {
@@ -166,7 +168,7 @@
           var v = ctx.parsed.y != null ? ctx.parsed.y : ctx.parsed;
           var ds = ctx.dataset || {};
           var localFmt = ds._cyntoraFormat
-            ? pickFormatter({ format: ds._cyntoraFormat, currency: ds._cyntoraCurrency || spec.currency })
+            ? pickFormatter({ format: ds._cyntoraFormat, currency: ds._cyntoraCurrency || spec.currency, currency_explicit: spec.currency_explicit })
             : fmtMain;
           var name = ds.label ? ds.label + ': ' : '';
           return name + localFmt(v);
