@@ -582,6 +582,10 @@ section.page--dark .unavailable { background: rgba(255, 255, 255, 0.05); border-
 }
 .next-steps--external { margin-top: 48px; padding-top: 32px; border-top: 1px solid var(--border); }
 .next-steps--external h2 { font-size: clamp(22px, 2.4vw, 32px); }
+.next-steps--selfserve { margin-top: 48px; padding-top: 32px; border-top: 1px solid var(--border); }
+.next-steps--selfserve h2 { font-size: clamp(22px, 2.4vw, 32px); }
+.next-steps--recommend { margin-top: 48px; padding-top: 32px; border-top: 1px solid var(--border); }
+.next-steps--recommend h2 { font-size: clamp(22px, 2.4vw, 32px); }
 
 /* Upsell box — used by paused clients (ESN) instead of the next-steps list.
    A single bordered card so the recommendations read as an offer, not as
